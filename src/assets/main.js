@@ -1,9 +1,9 @@
 $(function() {
+
   $.ajax({
       url: 'https://www.codeschool.com/users/2728572.json',
       dataType: 'jsonp',
       success: function(response) {
-        console.log('response', response.courses.completed);
         addCourses(response.courses.completed);
       }
     });
@@ -12,8 +12,25 @@ $(function() {
 
       var $badges = $('#badges');
 
-      for(var i = 0; i < courses.length; i++){
-        $(<div)
+      for(course in courses){
+        var $course = $('<div />', {
+          'class':'course'
+        }).appendTo($badges);
+
+        $('<h3 />', {
+          text: course.title
+        }).appendTo($course);
+
+        $('<img />', {
+          src: course.badge
+        }).appendTo($course);
+
+        $('<a />', {
+          href: course.url,
+          target: '_blank',
+          'class': 'btn btn-primary',
+          text: 'See Course'
+        }).appendTo($course);
       }
     }
 });
